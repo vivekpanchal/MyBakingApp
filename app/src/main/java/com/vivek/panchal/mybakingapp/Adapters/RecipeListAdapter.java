@@ -6,10 +6,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MasterListAdapter extends RecyclerView.Adapter<MasterListAdapter.RecipeViewHolder> {
+import com.vivek.panchal.mybakingapp.Models.Recipe;
+
+import java.util.List;
+
+public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeViewHolder> {
 
     private Context mContext;
+    private final List<Recipe> mRecipeList;
 
+    public RecipeListAdapter(Context mContext, List<Recipe> mRecipeList) {
+        this.mContext = mContext;
+        this.mRecipeList = mRecipeList;
+    }
 
     @NonNull
     @Override
@@ -24,7 +33,7 @@ public class MasterListAdapter extends RecyclerView.Adapter<MasterListAdapter.Re
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mRecipeList.size();
     }
 
     public class RecipeViewHolder extends RecyclerView.ViewHolder {
