@@ -1,4 +1,3 @@
-
 package com.vivek.panchal.mybakingapp.Models;
 
 import android.os.Parcel;
@@ -7,7 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Step implements Parcelable {
+public class Steps implements Parcelable{
 
     @SerializedName("id")
     @Expose
@@ -25,7 +24,7 @@ public class Step implements Parcelable {
     @Expose
     private String thumbnailURL;
 
-    private Step(Parcel in) {
+    private Steps(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
         } else {
@@ -37,15 +36,15 @@ public class Step implements Parcelable {
         thumbnailURL = in.readString();
     }
 
-    public static final Creator<Step> CREATOR = new Creator<Step>() {
+    public static final Creator<Steps> CREATOR = new Creator<Steps>() {
         @Override
-        public Step createFromParcel(Parcel in) {
-            return new Step(in);
+        public Steps createFromParcel(Parcel in) {
+            return new Steps(in);
         }
 
         @Override
-        public Step[] newArray(int size) {
-            return new Step[size];
+        public Steps[] newArray(int size) {
+            return new Steps[size];
         }
     };
 
@@ -53,40 +52,20 @@ public class Step implements Parcelable {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getShortDescription() {
         return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getVideoURL() {
         return videoURL;
     }
 
-    public void setVideoURL(String videoURL) {
-        this.videoURL = videoURL;
-    }
-
     public String getThumbnailURL() {
         return thumbnailURL;
-    }
-
-    public void setThumbnailURL(String thumbnailURL) {
-        this.thumbnailURL = thumbnailURL;
     }
 
     @Override

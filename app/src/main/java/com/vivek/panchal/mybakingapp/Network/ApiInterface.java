@@ -12,7 +12,7 @@ import retrofit2.http.GET;
  */
 public interface ApiInterface {
 
-    @GET("/baking.json")
+    @GET("baking.json")
     Call<List<Recipe>> getRecipe();
 
 

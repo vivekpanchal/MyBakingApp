@@ -3,6 +3,8 @@
     package="com.vivek.panchal.mybakingapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -19,8 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".UI.Activities.ReciepeActivity" />
-        <activity android:name=".UI.Activities.StepsActivity">
-        </activity>
+        <activity android:name=".UI.Activities.StepsActivity"></activity>
     </application>
 
 </manifest>

@@ -5,11 +5,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.vivek.panchal.mybakingapp.Models.Recipe;
 import com.vivek.panchal.mybakingapp.R;
 
@@ -17,6 +19,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeViewHolder> {
 
@@ -37,6 +41,18 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
+        if (mRecipeList.get(position).getName()!=null){
+            holder.mRecipeName.setText(mRecipeList.get(position).getName().toString());
+        }
+
+        Log.d(TAG, "onBindViewHolder: " + mRecipeList.get(position).getName());
+//        holder.tv_step_count.setText("No. Of Steps : " + mRecipeList.get(position).getSteps().size());
+//        holder.tv_ingredients_count.setText("No. Of Ingredients : " + mRecipeList.get(position).getIngredients().size());
+
+
+        Glide.with(mContext)
+                .load(mRecipeList.get(position).getImage())
+                .into(holder.mRecipeImg);
 
 
     }

@@ -1,14 +1,14 @@
-
 package com.vivek.panchal.mybakingapp.Models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Recipe implements Parcelable {
+import java.util.List;
+
+public class Recipe implements Parcelable{
 
     @SerializedName("id")
     @Expose
@@ -18,10 +18,10 @@ public class Recipe implements Parcelable {
     private String name;
     @SerializedName("ingredients")
     @Expose
-    private List<Ingredient> ingredients = null;
+    private List<Ingredients> ingredients = null;
     @SerializedName("steps")
     @Expose
-    private List<Step> steps = null;
+    private List<Steps> steps = null;
     @SerializedName("servings")
     @Expose
     private Integer servings;
@@ -36,7 +36,6 @@ public class Recipe implements Parcelable {
             id = in.readInt();
         }
         name = in.readString();
-        ingredients = in.createTypedArrayList(Ingredient.CREATOR);
         if (in.readByte() == 0) {
             servings = null;
         } else {
@@ -61,48 +60,24 @@ public class Recipe implements Parcelable {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Ingredient> getIngredients() {
+    public List<Ingredients> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public List<Step> getSteps() {
+    public List<Steps> getSteps() {
         return steps;
-    }
-
-    public void setSteps(List<Step> steps) {
-        this.steps = steps;
     }
 
     public Integer getServings() {
         return servings;
     }
 
-    public void setServings(Integer servings) {
-        this.servings = servings;
-    }
-
     public String getImage() {
         return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     @Override
@@ -119,7 +94,6 @@ public class Recipe implements Parcelable {
             parcel.writeInt(id);
         }
         parcel.writeString(name);
-        parcel.writeTypedList(ingredients);
         if (servings == null) {
             parcel.writeByte((byte) 0);
         } else {
