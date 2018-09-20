@@ -36,7 +36,7 @@ public class Repository {
     }
 
 
-    public LiveData<List<Recipe>> getLiveData() {
+    public LiveData<List<Recipe>> getRecipeData() {
 
         //if list is null
         if (recipeList == null) {
