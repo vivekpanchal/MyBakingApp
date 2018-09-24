@@ -79,10 +79,6 @@ public class MasterListFragment extends Fragment {
             recipeRecyclerView.setAdapter(recipeAdapter);
         }
 
-
-
-
-
         return rootView;
     }
 }
