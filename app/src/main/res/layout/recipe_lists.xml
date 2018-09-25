@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:layout_margin="5dp"
-    android:id="@+id/card"
     android:padding="5dp"
     app:cardCornerRadius="5dp">
 
@@ -20,16 +20,16 @@
 
         <TextView
             android:id="@+id/recipe_name_txt"
-            android:layout_width="298dp"
+            android:layout_width="355dp"
             android:layout_height="33dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:text="Nutella pie"
             android:textAlignment="center"
-            android:textColor="@color/colorAccent"
+            android:textColor="#000000"
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
