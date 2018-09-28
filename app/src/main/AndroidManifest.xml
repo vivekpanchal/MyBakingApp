@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.Activities.StepsActivity"></activity>
+        <activity android:name=".UI.Activities.StepsActivity" />
+        <activity android:name=".UI.Activities.ViewStepsActivity"></activity>
     </application>
 
 </manifest>

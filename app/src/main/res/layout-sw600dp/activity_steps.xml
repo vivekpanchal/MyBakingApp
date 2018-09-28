@@ -28,7 +28,7 @@
         android:layout_width="1dp"
         android:background="#80000000"/>
 
-    <!--<include layout="@layout/activity_view_step"/>-->
+    <include layout="@layout/activity_view_steps"/>
 
 
 
