@@ -23,7 +23,7 @@ public class ViewStepsActivity extends AppCompatActivity {
         ViewStepsFragment fragment = new ViewStepsFragment();
         fragment.setArguments(arguments);
         this.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.view_step_layout, fragment)
+                .replace(R.id.view_step_Framelayout, fragment)
                 .commit();
     }
 }
