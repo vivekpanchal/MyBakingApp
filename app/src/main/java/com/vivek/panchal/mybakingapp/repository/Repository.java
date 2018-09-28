@@ -40,7 +40,7 @@ public class Repository {
 
         //if list is null
         if (recipeList == null) {
-            recipeList = new MutableLiveData<List<Recipe>>();
+            recipeList = new MutableLiveData<>();
             //we will load it asynchronously from server in this method
             ApiInterface apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
             Call<List<Recipe>> listCall = apiInterface.getRecipe();

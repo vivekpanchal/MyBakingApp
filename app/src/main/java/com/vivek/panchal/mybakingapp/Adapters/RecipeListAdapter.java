@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,10 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     private Context mContext;
     private final List<Recipe> mRecipeList;
+    private int[] imageList = {
+            R.drawable.nutella_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheesecake
+    };
+
 
     public RecipeListAdapter(Context mContext, List<Recipe> mRecipeList) {
         this.mContext = mContext;
@@ -45,8 +50,13 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         if (mRecipeList.get(position).getName() != null) {
             holder.mRecipeName.setText(mRecipeList.get(position).getName());
         }
-        if (mRecipeList.get(position).getImage() != null) {
+        if (TextUtils.isEmpty(mRecipeList.get(position).getImage())) {
+
+            Picasso.get().load(imageList[position]).into(holder.mRecipeImg);
+
+        } else {
             Picasso.get().load(mRecipeList.get(position).getImage()).into(holder.mRecipeImg);
+
         }
 
         holder.mRecipeCard.setOnClickListener(v -> {

@@ -80,6 +80,7 @@ public class Recipe implements Parcelable{
         return image;
     }
 
+
     @Override
     public int describeContents() {
         return 0;

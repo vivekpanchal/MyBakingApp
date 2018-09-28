@@ -68,13 +68,10 @@ public class MasterListFragment extends Fragment {
         recipeViewModel = new RecipeViewModel();
 
         if (recipeViewModel.getRecipes() != null) {
-            recipeViewModel.getRecipes().observe((LifecycleOwner) context, new Observer<List<Recipe>>() {
-                @Override
-                public void onChanged(@Nullable List<Recipe> recipes) {
-                    recipeAdapter = new RecipeListAdapter(context, recipes);
-                    recipeRecyclerView.setAdapter(recipeAdapter);
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
+            recipeViewModel.getRecipes().observe((LifecycleOwner) context, recipes -> {
+                recipeAdapter = new RecipeListAdapter(context, recipes);
+                recipeRecyclerView.setAdapter(recipeAdapter);
+                progressBar.setVisibility(View.INVISIBLE);
             });
         } else {
             recipeAdapter = new RecipeListAdapter(context, null);
