@@ -63,6 +63,7 @@ public class MasterListFragment extends Fragment {
         } else {
             recipeRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         }
+        progressBar.setVisibility(View.VISIBLE);
 
         recipeViewModel = new RecipeViewModel();
 
@@ -72,6 +73,7 @@ public class MasterListFragment extends Fragment {
                 public void onChanged(@Nullable List<Recipe> recipes) {
                     recipeAdapter = new RecipeListAdapter(context, recipes);
                     recipeRecyclerView.setAdapter(recipeAdapter);
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
             });
         } else {
