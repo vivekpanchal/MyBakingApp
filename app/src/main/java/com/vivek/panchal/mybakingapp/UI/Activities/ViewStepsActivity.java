@@ -25,5 +25,6 @@ public class ViewStepsActivity extends AppCompatActivity {
         this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.view_step_Framelayout, fragment)
                 .commit();
+
     }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import com.vivek.panchal.mybakingapp.Adapters.StepsAdapter;
 import com.vivek.panchal.mybakingapp.Models.Ingredients;
 import com.vivek.panchal.mybakingapp.Models.Steps;
@@ -58,7 +57,6 @@ public class StepsActivity extends AppCompatActivity {
         }
         stepsAdapter = new StepsAdapter(twoPane, this, stepsList);
         mSelectRecylerView.setAdapter(stepsAdapter);
-
     }
 
 
