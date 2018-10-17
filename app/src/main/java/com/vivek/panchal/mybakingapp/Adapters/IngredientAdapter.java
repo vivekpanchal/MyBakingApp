@@ -34,7 +34,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Re
         return new RecipeIngredientViewholder(view);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RecipeIngredientViewholder holder, int position) {
         Ingredients ingredient = ingredientList.get(position);

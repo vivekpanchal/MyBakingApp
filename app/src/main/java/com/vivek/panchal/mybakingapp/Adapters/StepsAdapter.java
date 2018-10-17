@@ -1,9 +1,12 @@
 package com.vivek.panchal.mybakingapp.Adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +14,9 @@ import android.widget.TextView;
 
 import com.vivek.panchal.mybakingapp.Models.Steps;
 import com.vivek.panchal.mybakingapp.R;
+import com.vivek.panchal.mybakingapp.UI.Activities.ViewStepsActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -20,11 +25,11 @@ import butterknife.ButterKnife;
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
 
     private final Context context;
-    private final List<Steps> mStepsList;
+    private final List<Steps> mSteps;
 
-    public StepsAdapter(Context context, List<Steps> mStepsList) {
+    public StepsAdapter(Context context, List<Steps> mSteps) {
         this.context = context;
-        this.mStepsList = mStepsList;
+        this.mSteps = mSteps;
     }
 
     @NonNull
@@ -34,22 +39,28 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         return new StepsViewHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull StepsViewHolder holder, int position) {
-        if (mStepsList.get(position).getDescription() != null) {
-            holder.steps_text.setText((position + 1) + ": " + mStepsList.get(position).getShortDescription());
+        if (mSteps.get(position).getDescription() != null) {
+            holder.steps_text.setText((position + 1) + ": " + mSteps.get(position).getShortDescription());
         }
 
+        holder.stepCard.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ViewStepsActivity.class);
+            intent.putParcelableArrayListExtra("videosteps", new ArrayList<Parcelable>(mSteps));
+            intent.putExtra("videoposition", holder.getAdapterPosition());
+            Log.d("videsteps", "" + mSteps);
+            context.startActivity(intent);
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        if (mStepsList == null) {
+        if (mSteps == null) {
             return 0;
         } else {
-            return mStepsList.size();
+            return mSteps.size();
         }
 
     }
@@ -58,6 +69,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
     public class StepsViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.steps_text)
         TextView steps_text;
+        @BindView(R.id.step_Card)
+        CardView stepCard;
 
         public StepsViewHolder(View itemView) {
             super(itemView);

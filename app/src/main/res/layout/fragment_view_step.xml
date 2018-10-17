@@ -1,36 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarViewStep"
         android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary" />
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/playerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="@dimen/dimen_8_dp"
+        android:adjustViewBounds="true"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/txt_step_label"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_below="@id/playerView"
+        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@android:color/white"
+        android:textAllCaps="true"
+        android:textColor="@android:color/black"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        tools:text="Step" />
 
-        <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:background="@color/colorPrimary"
-            android:layout_height="?attr/actionBarSize"
-            android:id="@+id/toolbarViewStep"/>
+    <TextView
+        android:id="@+id/tv_description_view_step"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_8_dp"
+        android:text="@string/long_description"
+        android:textSize="@dimen/dimen_15_sp" />
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/playerView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:focusable="true"
-            android:layout_margin="@dimen/dimen_8_dp"
-            android:adjustViewBounds="true" />
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_8_dp"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_next"
             android:layout_width="wrap_content"
-            android:textSize="@dimen/dimen_15_sp"
-            android:id="@+id/tv_description_view_step"
-            android:text="@string/long_description" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/ic_arrow_forward_black_24dp" />
 
-    </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_prev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
+    </FrameLayout>
 
-</ScrollView>
+</LinearLayout>
