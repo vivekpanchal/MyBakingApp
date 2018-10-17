@@ -40,8 +40,14 @@ public class ViewStepsFragment extends Fragment {
     Toolbar toolbar;
     private SimpleExoPlayer exoPlayer;
     private String bundleKey;
+    public int currentPosition;
 
     public ViewStepsFragment() {
+    }
+
+    public void setCurrentStep(int currentStepPosition) {
+
+        this.currentPosition = currentStepPosition;
     }
 
     @Override

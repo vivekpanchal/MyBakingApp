@@ -1,5 +1,6 @@
 package com.vivek.panchal.mybakingapp.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import com.vivek.panchal.mybakingapp.Models.Steps;
 import com.vivek.panchal.mybakingapp.R;
-import com.vivek.panchal.mybakingapp.UI.Activities.StepsActivity;
 
 import java.util.List;
 
@@ -18,12 +18,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
-    private final boolean twoPane;
+
     private final Context context;
     private final List<Steps> mStepsList;
 
-    public StepsAdapter(boolean twoPane, Context context, List<Steps> mStepsList) {
-        this.twoPane = twoPane;
+    public StepsAdapter(Context context, List<Steps> mStepsList) {
         this.context = context;
         this.mStepsList = mStepsList;
     }
@@ -35,10 +34,11 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         return new StepsViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull StepsViewHolder holder, int position) {
         if (mStepsList.get(position).getDescription() != null) {
-            holder.steps_text.setText(mStepsList.get(position).getShortDescription());
+            holder.steps_text.setText((position + 1) + ": " + mStepsList.get(position).getShortDescription());
         }
 
 
