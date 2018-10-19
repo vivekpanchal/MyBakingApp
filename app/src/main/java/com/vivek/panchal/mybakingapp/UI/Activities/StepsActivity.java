@@ -102,15 +102,6 @@ public class StepsActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    public void OnClickednstep(int position) {
-//
-//        ViewStepsFragment stepsFragment = new ViewStepsFragment();
-//        stepsFragment.setCurrentStep(position);
-//
-//        getSupportFragmentManager().beginTransaction().replace(R.id.container, stepsFragment)
-//                .commit();
-//    }
 
 
 }
