@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.vivek.panchal.mybakingapp.Adapters.IngredientAdapter;
 import com.vivek.panchal.mybakingapp.Adapters.StepsAdapter;
@@ -22,7 +23,6 @@ public class StepsActivity extends AppCompatActivity {
     private static String TAG = StepsActivity.class.getSimpleName();
     private List<Steps> stepsList;
     private boolean mTwoPane;
-
 
     private StepsAdapter stepsAdapter;
     private IngredientAdapter ingredientAdapter;
@@ -46,27 +46,7 @@ public class StepsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setUpActivity();
-
-
-//        mTwoPane = false;
-//
-//        if (findViewById(R.id.view_step_Framelayout) != null) {
-//            mTwoPane = true;
-//            //Show default fragment in tablet
-//            Bundle arguments = new Bundle();
-//            Steps step = stepsList.get(0);
-//            arguments.putParcelable("stepInfo", step);
-//
-//            ViewStepsFragment fragment = new ViewStepsFragment();
-//            fragment.setArguments(arguments);
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.view_step_Framelayout, fragment)
-//                    .commit();
-//        }
-
-
     }
-
 
     /**
      * A method that initializes the activity
@@ -82,16 +62,17 @@ public class StepsActivity extends AppCompatActivity {
             recipeName = getIntent().getStringExtra("recipeName");
             mIngredientsList = getIntent().getParcelableArrayListExtra("ingredientsList");
 
+            Log.d(TAG, "[StepsList]: " + stepsList.get(position).getId());
 
         }
 
+        //checking if the its tablet  or simple phone mode
         if (findViewById(R.id.view_step_Framelayout) != null) {
             mTwoPane = true;
             setUpTabletFragment();
         } else {
             mTwoPane = false;
         }
-
 
         mSelectRecylerView.setLayoutManager(new LinearLayoutManager(this));
         mIngredientRecylerView.setLayoutManager(new LinearLayoutManager(this));

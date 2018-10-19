@@ -1,7 +1,6 @@
 package com.vivek.panchal.mybakingapp.UI.Fragments;
 
 import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,11 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.vivek.panchal.mybakingapp.Adapters.RecipeListAdapter;
-import com.vivek.panchal.mybakingapp.Models.Recipe;
 import com.vivek.panchal.mybakingapp.R;
 import com.vivek.panchal.mybakingapp.ViewModel.RecipeViewModel;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +63,7 @@ public class MasterListFragment extends Fragment {
 
         recipeViewModel = new RecipeViewModel();
 
+        //setting up the recipies list using observer pattern
         if (recipeViewModel.getRecipes() != null) {
             recipeViewModel.getRecipes().observe((LifecycleOwner) context, recipes -> {
                 recipeAdapter = new RecipeListAdapter(context, recipes);

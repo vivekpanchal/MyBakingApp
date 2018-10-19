@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,23 +29,26 @@ import com.vivek.panchal.mybakingapp.Models.Steps;
 import com.vivek.panchal.mybakingapp.R;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ViewStepsFragment extends Fragment {
 
-
     @BindView(R.id.fab_next)
-    FloatingActionButton fabNext;
+    FloatingActionButton mNextStep_btn;
     @BindView(R.id.fab_prev)
-    FloatingActionButton fabPrev;
+    FloatingActionButton mPrevStep_btn;
     @BindView(R.id.playerView)
     PlayerView playerView;
     @BindView(R.id.txt_step_label)
     TextView stepLabel;
     @BindView(R.id.tv_description_view_step)
     TextView StepDescription;
+
+    @BindView(R.id.thumbnail_url)
+    ImageView mThumbnail;
     private SimpleExoPlayer player;
 
     public List<Steps> steps;
@@ -57,6 +61,7 @@ public class ViewStepsFragment extends Fragment {
     private static final String SAVED_PLAYBACK_POSITION = "playback_position";
     private static final String SAVED_PLAYBACK_WINDOW = "current_window";
     private static final String SAVED_PLAY_WHEN_READY = "play_when_ready";
+
 
     public ViewStepsFragment() {
     }
@@ -78,13 +83,11 @@ public class ViewStepsFragment extends Fragment {
             playWhenReady = savedInstanceState.getBoolean(SAVED_PLAY_WHEN_READY, false);
 
         }
-//
+
 
         View view = inflater.inflate(R.layout.fragment_view_step, container, false);
         ButterKnife.bind(this, view);
         steps = getArguments().getParcelableArrayList("videosteps");
-        //initViews();
-        //setUpNxtPrevListeners();
 
 
         return view;
@@ -103,6 +106,7 @@ public class ViewStepsFragment extends Fragment {
     }
 //
 
+    //region Instanstiating views
     private void initViews() {
 
 
@@ -117,12 +121,14 @@ public class ViewStepsFragment extends Fragment {
 
 
     }
+    //endregion
 
+
+    //region setting up next and Previous listner for video
     private void setUpNxtPrevListeners() {
-        fabNext.setOnClickListener(v -> {
+        mNextStep_btn.setOnClickListener(v -> {
             if (currentPosition < steps.size() - 1) {
                 setCurrentStep(currentPosition + 1);
-
 
                 if (steps.get(currentPosition).getVideoURL() != null) {
                     releasePlayer();
@@ -133,43 +139,43 @@ public class ViewStepsFragment extends Fragment {
 
                     initViews();
                     if (steps.get(currentPosition).getThumbnailURL() == null) {
-//                            Picasso.get().load(R.drawable.ic_launcher_background).into(thumnail);
+                        Picasso.get().load(R.drawable.recipe).into(mThumbnail);
                     } else {
-//                            Picasso.get().load(steps.get(currentPosition).getThumbnailURL()).into(thumnail);
+                        Picasso.get().load(steps.get(currentPosition).getThumbnailURL()).into(mThumbnail);
                     }
                 }
 
 
             }
         });
-        fabPrev.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentPosition > 0) {
-                    setCurrentStep(currentPosition - 1);
+        mPrevStep_btn.setOnClickListener(v -> {
+            if (currentPosition > 0) {
+                setCurrentStep(currentPosition - 1);
 
 
-                    if (steps.get(currentPosition).getVideoURL() != null) {
-                        releasePlayer();
-                        initViews();
-                        initilizePlayer();
-//                        thumnail.setVisibility(View.GONE);
+                if (steps.get(currentPosition).getVideoURL() != null) {
+                    releasePlayer();
+                    initViews();
+                    initilizePlayer();
+                    mThumbnail.setVisibility(View.GONE);
+                } else {
+                    playerView.setVisibility(View.GONE);
+                    mThumbnail.setVisibility(View.VISIBLE);
+                    initViews();
+                    if (steps.get(currentPosition).getThumbnailURL() == null) {
+                        Picasso.get().load(R.drawable.recipe).into(mThumbnail);
                     } else {
-                        playerView.setVisibility(View.GONE);
-//                        thumnail.setVisibility(View.VISIBLE);
-                        initViews();
-                        if (steps.get(currentPosition).getThumbnailURL() == null) {
-//                            Picasso.get().load(R.drawable.ic_launcher_background).into(thumnail);
-                        } else {
-//                            Picasso.get().load(steps.get(currentPosition).getThumbnailURL()).into(thumnail);
-                        }
-                        ;
+                        Picasso.get().load(steps.get(currentPosition).getThumbnailURL()).into(mThumbnail);
                     }
 
                 }
+
             }
         });
     }
+
+
+    //endregion
 
     @Override
     public void onResume() {
@@ -205,8 +211,8 @@ public class ViewStepsFragment extends Fragment {
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) playerView.getLayoutParams();
-        params.width = params.MATCH_PARENT;
-        params.height = params.MATCH_PARENT;
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         playerView.setLayoutParams(params);
     }
 
@@ -234,20 +240,23 @@ public class ViewStepsFragment extends Fragment {
 
     }
 
+    //region Player initialisation
     private void initilizePlayer() {
         Steps step = steps.get(currentPosition);
-        Uri mediauri = Uri.parse(step.getVideoURL());
+        Uri mediaUri = Uri.parse(step.getVideoURL());
         player = ExoPlayerFactory.newSimpleInstance(
                 new DefaultRenderersFactory(getContext()),
                 new DefaultTrackSelector(), new DefaultLoadControl());
         playerView.setPlayer(player);
         DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(
-                getContext(), Util.getUserAgent(getContext(), "baking-app"));
+                Objects.requireNonNull(getContext()), Util.getUserAgent(getContext(), getResources().getResourceName(R.string.app_name)));
         ExtractorMediaSource mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(mediauri);
+                .createMediaSource(mediaUri);
         player.prepare(mediaSource);
         player.setPlayWhenReady(true);
     }
+
+    //endregion
 
     @Override
     public void onPause() {
@@ -258,6 +267,7 @@ public class ViewStepsFragment extends Fragment {
         }
     }
 
+    //region Release player
     private void releasePlayer() {
         if (player != null) {
             playbackPosition = player.getCurrentPosition();
@@ -268,6 +278,9 @@ public class ViewStepsFragment extends Fragment {
         }
     }
 
+    //endregion
+
+
     @Override
     public void onStop() {
         super.onStop();
@@ -277,6 +290,8 @@ public class ViewStepsFragment extends Fragment {
 
     }
 
+
+    //region onsavedInstance Related
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -286,4 +301,6 @@ public class ViewStepsFragment extends Fragment {
         outState.putBoolean(SAVED_PLAY_WHEN_READY, playWhenReady);
 
     }
+
+    //endregion
 }

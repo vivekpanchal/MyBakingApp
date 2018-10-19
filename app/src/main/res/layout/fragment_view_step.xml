@@ -19,6 +19,13 @@
         android:adjustViewBounds="true"
         android:focusable="true" />
 
+    <ImageView
+        android:id="@+id/thumbnail_url"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/recipe"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/txt_step_label"
         android:layout_width="wrap_content"
