@@ -1,7 +1,10 @@
 package com.vivek.panchal.mybakingapp.Adapters;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
@@ -13,10 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.vivek.panchal.mybakingapp.Models.Recipe;
 import com.vivek.panchal.mybakingapp.R;
 import com.vivek.panchal.mybakingapp.UI.Activities.StepsActivity;
+import com.vivek.panchal.mybakingapp.Widget.RecipeWidget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +33,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     private Context mContext;
     private final List<Recipe> mRecipeList;
+    public static final String APP_PREFERENCE = "current_recipe_preference";
+    public static final String RECIPE_KEY = "current_recipe";
+
     private int[] imageList = {
             R.drawable.nutella_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheesecake
     };
@@ -67,6 +75,21 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             intent.putParcelableArrayListExtra("stepsList", new ArrayList<Parcelable>(mRecipeList.get(holder.getAdapterPosition()).getSteps()));
             intent.putParcelableArrayListExtra("ingredientsList", new ArrayList<Parcelable>(mRecipeList.get(holder.getAdapterPosition()).getIngredients()));
             mContext.startActivity(intent);
+
+
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+            SharedPreferences sharedPreferences = mContext.getSharedPreferences(APP_PREFERENCE, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(mRecipeList.get(position));
+            // String json=recipies.get(position).toString();
+            editor.putString(RECIPE_KEY, json);
+            editor.apply();
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, RecipeWidget.class));
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
+            RecipeWidget.updateIngredientWidgets(mContext, appWidgetManager, appWidgetIds);
         });
 
 
