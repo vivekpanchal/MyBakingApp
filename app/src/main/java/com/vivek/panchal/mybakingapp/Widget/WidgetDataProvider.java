@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.vivek.panchal.mybakingapp.Models.Ingredients;
 import com.vivek.panchal.mybakingapp.Models.Recipe;
+import com.vivek.panchal.mybakingapp.R;
+import com.vivek.panchal.mybakingapp.Utils.Prefs;
 
 public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory {
     Context mContext;
@@ -25,7 +28,7 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public void onDataSetChanged() {
-
+        mRecipe = Prefs.retrieveWidgetItemFromPrefs(mContext);
     }
 
     @Override
@@ -35,12 +38,20 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public int getCount() {
-        return 0;
+        if (mRecipe == null) return 0;
+        return mRecipe.getIngredients().size();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
-        return null;
+
+        if (mRecipe == null)
+            return null;
+        Ingredients ingredient = mRecipe.getIngredients().get(position);
+        String content = Prefs.IngrendientTextString(ingredient, position);
+        RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.recipe_widget);
+        views.setTextViewText(R.id.widget_recipeName, content);
+        return views;
     }
 
     @Override
@@ -50,12 +61,12 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
