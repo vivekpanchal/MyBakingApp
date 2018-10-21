@@ -67,7 +67,6 @@ public class ViewStepsFragment extends Fragment {
     }
 
     public void setCurrentStep(int currentStepPosition) {
-
         this.currentPosition = currentStepPosition;
     }
 
