@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +48,9 @@ public class ViewStepsFragment extends Fragment {
     TextView stepLabel;
     @BindView(R.id.tv_description_view_step)
     TextView StepDescription;
+
+    @BindView(R.id.toolbarViewStep)
+    Toolbar toolbar;
 
     @BindView(R.id.thumbnail_url)
     ImageView mThumbnail;
@@ -86,7 +91,9 @@ public class ViewStepsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_view_step, container, false);
         ButterKnife.bind(this, view);
-        steps = getArguments().getParcelableArrayList("videosteps");
+        if (getArguments() != null) {
+            steps = getArguments().getParcelableArrayList("videosteps");
+        }
 
 
         return view;
@@ -116,6 +123,9 @@ public class ViewStepsFragment extends Fragment {
             stepLabel.setText(steps.get(currentPosition).getShortDescription());
             StepDescription.setText(steps.get(currentPosition).getDescription());
         }
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(steps.get(currentPosition).getShortDescription());
         setUpNxtPrevListeners();
 
 
@@ -180,24 +190,24 @@ public class ViewStepsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (Util.SDK_INT < 23 || player == null) {
-
-            if (steps.get(currentPosition).getVideoURL() != null) {
-                initilizePlayer();
-                initViews();
-//                thumnail.setVisibility(View.GONE);
-            } else {
-                playerView.setVisibility(View.GONE);
-//                thumnail.setVisibility(View.VISIBLE);
-                initViews();
-                if (steps.get(currentPosition).getThumbnailURL() == null) {
-//                    Picasso.get().load(R.drawable.ic_launcher_background).into(thumnail);
-                } else {
-//                    Picasso.get().load(steps.get(currentPosition).getThumbnailURL()).into(thumnail);
-                }
-            }
-
-        }
+//        if (Util.SDK_INT < 23 || player == null) {
+//
+//            if (steps.get(currentPosition).getVideoURL() != null) {
+//                initilizePlayer();
+//                initViews();
+////                thumnail.setVisibility(View.GONE);
+//            } else {
+//                playerView.setVisibility(View.GONE);
+////                thumnail.setVisibility(View.VISIBLE);
+//                initViews();
+//                if (steps.get(currentPosition).getThumbnailURL() == null) {
+////                    Picasso.get().load(R.drawable.ic_launcher_background).into(thumnail);
+//                } else {
+////                    Picasso.get().load(steps.get(currentPosition).getThumbnailURL()).into(thumnail);
+//                }
+//            }
+////
+////        }
     }
 
     @SuppressLint("InlinedApi")
@@ -219,25 +229,25 @@ public class ViewStepsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (Util.SDK_INT > 23) {
+//        if (Util.SDK_INT > 23) {
+//
+//            if (steps.get(currentPosition).getVideoURL() != null) {
+//                initilizePlayer();
+//
+//            } else {
+//                playerView.setVisibility(View.GONE);
+////                thumnail.setVisibility(View.VISIBLE);
+//                if (steps.get(currentPosition).getThumbnailURL() == null) {
+////                    Picasso.get().load(R.drawable.ic_launcher_background).into(thumnail);
+//                } else {
+////                    Picasso.get().load(steps.get(currentPosition).getThumbnailURL()).into(thumnail);
+//                }
+//            }
 
-            if (steps.get(currentPosition).getVideoURL() != null) {
-                initilizePlayer();
-
-            } else {
-                playerView.setVisibility(View.GONE);
-//                thumnail.setVisibility(View.VISIBLE);
-                if (steps.get(currentPosition).getThumbnailURL() == null) {
-//                    Picasso.get().load(R.drawable.ic_launcher_background).into(thumnail);
-                } else {
-//                    Picasso.get().load(steps.get(currentPosition).getThumbnailURL()).into(thumnail);
-                }
-            }
-
-
-        }
 
     }
+
+//    }
 
     //region Player initialisation
     private void initilizePlayer() {

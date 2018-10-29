@@ -20,8 +20,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.Activities.StepsActivity" />
-        <activity android:name=".UI.Activities.ViewStepsActivity" />
+        <activity
+            android:name=".UI.Activities.StepsActivity"
+            android:parentActivityName=".UI.Activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Activities.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".UI.Activities.ViewStepsActivity"
+            android:parentActivityName=".UI.Activities.StepsActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Activities.StepsActivity" />
+
+        </activity>
+
 
         <receiver android:name=".Widget.RecipeWidget">
             <intent-filter>

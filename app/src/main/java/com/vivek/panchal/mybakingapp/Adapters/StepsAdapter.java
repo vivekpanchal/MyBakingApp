@@ -2,8 +2,10 @@ package com.vivek.panchal.mybakingapp.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.vivek.panchal.mybakingapp.Models.Steps;
 import com.vivek.panchal.mybakingapp.R;
 import com.vivek.panchal.mybakingapp.UI.Activities.ViewStepsActivity;
+import com.vivek.panchal.mybakingapp.UI.Fragments.ViewStepsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +29,14 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
 
     private final Context context;
     private final List<Steps> mSteps;
+    private final boolean twoPane;
 
-    public StepsAdapter(Context context, List<Steps> mSteps) {
+    public StepsAdapter(Context context, List<Steps> mSteps, boolean mTwoPane) {
         this.context = context;
         this.mSteps = mSteps;
+        this.twoPane = mTwoPane;
     }
+
 
     @NonNull
     @Override
@@ -44,15 +50,29 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         if (mSteps.get(position).getDescription() != null) {
             holder.steps_text.setText((position + 1) + ": " + mSteps.get(position).getShortDescription());
         }
-
         holder.stepCard.setOnClickListener(v -> {
+            onClickEvent(holder);
+        });
+    }
+
+    private void onClickEvent(StepsViewHolder holder) {
+        if (twoPane) {
+            Bundle arguments = new Bundle();
+            arguments.putParcelable("stepInfo", mSteps.get(holder.getAdapterPosition()));
+            ViewStepsFragment fragment = new ViewStepsFragment();
+            fragment.setArguments(arguments);
+            fragment.setCurrentStep(holder.getAdapterPosition());
+            ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.view_step_Framelayout, fragment)
+                    .commit();
+        } else {
             Intent intent = new Intent(context, ViewStepsActivity.class);
             intent.putParcelableArrayListExtra("videosteps", new ArrayList<Parcelable>(mSteps));
             intent.putExtra("videoposition", holder.getAdapterPosition());
             Log.d("videsteps", "" + mSteps);
             context.startActivity(intent);
-        });
 
+        }
     }
 
     @Override

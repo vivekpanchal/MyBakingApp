@@ -74,11 +74,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             intent.putExtra("recipeName", mRecipeList.get(holder.getAdapterPosition()).getName());
             intent.putParcelableArrayListExtra("stepsList", new ArrayList<Parcelable>(mRecipeList.get(holder.getAdapterPosition()).getSteps()));
             intent.putParcelableArrayListExtra("ingredientsList", new ArrayList<Parcelable>(mRecipeList.get(holder.getAdapterPosition()).getIngredients()));
-            mContext.startActivity(intent);
-
-
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
+
             SharedPreferences sharedPreferences = mContext.getSharedPreferences(APP_PREFERENCE, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             Gson gson = new Gson();

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.vivek.panchal.mybakingapp.Adapters.IngredientAdapter;
@@ -15,6 +16,7 @@ import com.vivek.panchal.mybakingapp.R;
 import com.vivek.panchal.mybakingapp.UI.Fragments.ViewStepsFragment;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +32,8 @@ public class StepsActivity extends AppCompatActivity {
     private String recipeName;
     private List<Ingredients> mIngredientsList;
 
+    @BindView(R.id.toolbar_steps)
+    Toolbar mToolbar;
 
     @BindView(R.id.rv_steps)
     RecyclerView mSelectRecylerView;
@@ -44,6 +48,10 @@ public class StepsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_steps);
         ButterKnife.bind(this);
+
+        setSupportActionBar(mToolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         setUpActivity();
     }
@@ -73,10 +81,10 @@ public class StepsActivity extends AppCompatActivity {
         } else {
             mTwoPane = false;
         }
-
+        getSupportActionBar().setTitle(recipeName);
         mSelectRecylerView.setLayoutManager(new LinearLayoutManager(this));
         mIngredientRecylerView.setLayoutManager(new LinearLayoutManager(this));
-        stepsAdapter = new StepsAdapter(this, stepsList);
+        stepsAdapter = new StepsAdapter(this, stepsList, mTwoPane);
         ingredientAdapter = new IngredientAdapter(mIngredientsList, this);
         mSelectRecylerView.setAdapter(stepsAdapter);
         mIngredientRecylerView.setAdapter(ingredientAdapter);
@@ -99,10 +107,7 @@ public class StepsActivity extends AppCompatActivity {
                 .add(R.id.view_step_Framelayout, stepsFragment)
                 .commit();
 
-
     }
-
-
 
 }
 
