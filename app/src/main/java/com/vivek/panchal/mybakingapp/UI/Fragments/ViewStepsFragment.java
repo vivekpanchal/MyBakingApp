@@ -138,7 +138,6 @@ public class ViewStepsFragment extends Fragment {
         mNextStep_btn.setOnClickListener(v -> {
             if (currentPosition < steps.size() - 1) {
                 setCurrentStep(currentPosition + 1);
-
                 if (steps.get(currentPosition).getVideoURL() != null) {
                     releasePlayer();
                     initViews();
@@ -160,8 +159,6 @@ public class ViewStepsFragment extends Fragment {
         mPrevStep_btn.setOnClickListener(v -> {
             if (currentPosition > 0) {
                 setCurrentStep(currentPosition - 1);
-
-
                 if (steps.get(currentPosition).getVideoURL() != null) {
                     releasePlayer();
                     initViews();

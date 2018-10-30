@@ -57,14 +57,15 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
 
     private void onClickEvent(StepsViewHolder holder) {
         if (twoPane) {
-            Bundle arguments = new Bundle();
-            arguments.putParcelable("stepInfo", mSteps.get(holder.getAdapterPosition()));
-            ViewStepsFragment fragment = new ViewStepsFragment();
-            fragment.setArguments(arguments);
-            fragment.setCurrentStep(holder.getAdapterPosition());
+            ViewStepsFragment stepsFragment = new ViewStepsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("videosteps", new ArrayList<Parcelable>(mSteps));
+            stepsFragment.setArguments(bundle);
+            stepsFragment.setCurrentStep(holder.getAdapterPosition());
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.view_step_Framelayout, fragment)
+                    .replace(R.id.view_step_Framelayout, stepsFragment)
                     .commit();
+
         } else {
             Intent intent = new Intent(context, ViewStepsActivity.class);
             intent.putParcelableArrayListExtra("videosteps", new ArrayList<Parcelable>(mSteps));
