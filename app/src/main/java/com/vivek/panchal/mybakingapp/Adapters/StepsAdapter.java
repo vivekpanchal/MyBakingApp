@@ -3,12 +3,10 @@ package com.vivek.panchal.mybakingapp.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,6 @@ import com.vivek.panchal.mybakingapp.R;
 import com.vivek.panchal.mybakingapp.UI.Activities.ViewStepsActivity;
 import com.vivek.panchal.mybakingapp.UI.Fragments.ViewStepsFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,20 +54,17 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
 
     private void onClickEvent(StepsViewHolder holder) {
         if (twoPane) {
-            ViewStepsFragment stepsFragment = new ViewStepsFragment();
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("videosteps", new ArrayList<Parcelable>(mSteps));
-            stepsFragment.setArguments(bundle);
-            stepsFragment.setCurrentStep(holder.getAdapterPosition());
+            Bundle arguments = new Bundle();
+            arguments.putParcelable("stepInfo", mSteps.get(holder.getAdapterPosition()));
+            ViewStepsFragment fragment = new ViewStepsFragment();
+            fragment.setArguments(arguments);
             ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.view_step_Framelayout, stepsFragment)
+                    .replace(R.id.view_step_Framelayout, fragment)
                     .commit();
 
         } else {
             Intent intent = new Intent(context, ViewStepsActivity.class);
-            intent.putParcelableArrayListExtra("videosteps", new ArrayList<Parcelable>(mSteps));
-            intent.putExtra("videoposition", holder.getAdapterPosition());
-            Log.d("videsteps", "" + mSteps);
+            intent.putExtra("stepInfo", mSteps.get(holder.getAdapterPosition()));
             context.startActivity(intent);
 
         }

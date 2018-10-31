@@ -102,7 +102,6 @@ public class StepsActivity extends AppCompatActivity {
         arguments.putParcelable("stepInfo", step);
 
         stepsFragment.setArguments(arguments);
-        stepsFragment.setCurrentStep(position);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.view_step_Framelayout, stepsFragment)
                 .commit();
