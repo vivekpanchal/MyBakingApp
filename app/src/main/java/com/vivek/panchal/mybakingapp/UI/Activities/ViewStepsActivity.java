@@ -12,43 +12,24 @@ import java.util.Objects;
 
 public class ViewStepsActivity extends AppCompatActivity {
 
-    private Bundle arguments;
-    public List<Steps> steps;
-    public int position;
+    private Steps step;
+    private ViewStepsFragment viewStepsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_steps);
-
-        arguments = new Bundle();
-        arguments.putParcelable("stepInfoFromActivity", Objects.requireNonNull(getIntent().getExtras()).getParcelable("stepInfo"));
-//        if (getIntent().hasExtra("videoposition") && getIntent().hasExtra("videosteps"))
-//
-//            position = getIntent().getIntExtra("videoposition", 0);
-//        steps = getIntent().getParcelableArrayListExtra("videosteps");
-
-        setUpFragment();
-
+        if (getIntent().getExtras() != null)
+            step = getIntent().getExtras().getParcelable("stepInfo");
+        if (savedInstanceState == null) {
+            viewStepsFragment = ViewStepsFragment.getInstance(step);
+            setUpFragment();
+        }
     }
 
     private void setUpFragment() {
-//        ViewStepsFragment stepsFragment = new ViewStepsFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelableArrayList("videosteps", new ArrayList<Parcelable>(steps));
-//        stepsFragment.setArguments(bundle);
-//
-//
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().add(R.id.view_step_Framelayout, stepsFragment)
-//                .commit();
-
-        ViewStepsFragment stepsFragment = new ViewStepsFragment();
-        stepsFragment.setArguments(arguments);
         this.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.view_step_Framelayout, stepsFragment)
+                .replace(R.id.view_step_Framelayout, viewStepsFragment)
                 .commit();
-
-
     }
 }

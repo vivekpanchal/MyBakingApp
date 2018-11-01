@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 
 public class ViewStepsFragment extends Fragment {
 
+    private static final String STEP_KEY = "stepInfoFromActivity";
     private Steps step;
     @BindView(R.id.tv_description_view_step)
     TextView longDescTextView;
@@ -41,13 +42,23 @@ public class ViewStepsFragment extends Fragment {
     private SimpleExoPlayer exoPlayer;
     private String bundleKey;
 
-    public ViewStepsFragment() {
+    public static ViewStepsFragment getInstance(Steps step) {
+        ViewStepsFragment stepsFragment = new ViewStepsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(STEP_KEY, step);
+        stepsFragment.setArguments(bundle);
+        return stepsFragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            step = bundle.getParcelable(STEP_KEY);
+        }
     }
+
 
     @Nullable
     @Override
